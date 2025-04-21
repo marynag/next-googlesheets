@@ -54,7 +54,7 @@ export async function POST(req: Request) {
   }
 }
 
-export async function GET(req: Request) {
+export async function GET() {
   if (!process.env.GOOGLE_PRIVATE_KEY) {
     throw new Error("Missing GOOGLE_PRIVATE_KEY");
   }
@@ -84,9 +84,10 @@ export async function GET(req: Request) {
     const rows = await sheet.getRows();
 
     const rowData = rows.map((row) => {
-      const formattedRow: Record<string, any> = {};
-      sheet.headerValues.forEach((header, index) => {
-        formattedRow[header] = row._rawData[index];
+      const formattedRow: Record<string, string | number | null | undefined> =
+        {};
+      sheet.headerValues.forEach((header) => {
+        formattedRow[header] = row.get(header);
       });
       return formattedRow;
     });

@@ -83,7 +83,7 @@ export const useSendData = () => {
   } as const;
 };
 
-export const useGetData = async (): Promise<RowData[]> => {
+export const getData = async (): Promise<RowData[]> => {
   try {
     const response = await fetch(`/api/getPostData`);
     if (!response.ok) {
