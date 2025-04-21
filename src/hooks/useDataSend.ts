@@ -1,3 +1,4 @@
+"use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
@@ -14,7 +15,7 @@ export const useSendData = () => {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = (sendData: FormData) => {
+  const onSubmit = async (sendData: FormData) => {
     const data: Partial<FormData> = {};
 
     if (sendData) {
@@ -23,8 +24,21 @@ export const useSendData = () => {
       if (sendData.lastName) data.lastName = sendData.lastName;
       if (sendData.message) data.message = sendData.message;
     }
-    console.log("data", data);
-    // mutate({ data });
+
+    await fetch(`/api/getPostData?email=${sendData.email}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(sendData),
+    })
+      .then((res) => res.json())
+      .then(() => {
+        console.log("Success");
+      })
+      .catch((err) => {
+        console.error("Error", err);
+      });
   };
 
   return {

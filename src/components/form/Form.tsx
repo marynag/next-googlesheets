@@ -73,7 +73,6 @@ export const Form = () => {
                 {...field}
                 id="lastName"
                 type="text"
-                required
                 autoComplete="lastName"
                 className="block w-full rounded-md border bg-white px-3 py-1.5 text-base text-gray-900 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm"
               />
